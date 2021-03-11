@@ -2,21 +2,17 @@ const CustomError = require("../extensions/custom-error");
 
 module.exports = class DepthCalculator {
   calculateDepth(arr) {
-    if (arr.length === 0) {
-      return 1;
-    }
-    
-    let target = '[';
 
-    let pos = 0;
-    let counter = 0;
-    while (true) {
-      let foundPos = arr.indexOf(target, pos);
-
-      pos = foundPos + 1;
-      counter += 1
-    }
-    return counter
+    let recurs_Depth = 0;
+    let counter = 1;
+    arr.forEach((bracket) => {
+      if (Array.isArray(bracket)) {
+        counter = this.calculateDepth(bracket);
+        if (recurs_Depth < counter) recurs_Depth = counter;
+      }
+    })
+    return recurs_Depth + 1
   }
 
 };
+
